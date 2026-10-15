@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#11100d">
+  <meta name="description" content="Support Raphael Kiprop's medical treatment fund. Every contribution and prayer brings hope to his family.">
+
+  <title>Raphael Kiprop | Medical Fundraiser</title>
+
+  <style>
+    :root {
+      --bg: #11100d;
+      --card: #1b1915;
+      --gold: #d6b36a;
+      --white: #fffdf8;
+      --muted: #c3bdb1;
+      --green: #00a859;
+      --border: #393329;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: min(100% - 32px, 900px);
+      margin: auto;
+    }
+
+    .hero {
+      padding: 72px 0 48px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+    }
+
+    h1 {
+      margin: 20px 0;
+      font-size: clamp(2.2rem, 7vw, 4rem);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800;
+    }
+
+    h2 span {
+      color: var(--gold);
+    }
+
+    .hero-text {
+      max-width: 650px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 14px 22px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--gold);
+      color: #17130b;
+      font-size: 1rem;
+      font-weight: 800;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      filter: brightness(1.08);
+    }
+
+    .full-button {
+      display: block;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .fund-card,
+    .section-card,
+    .donate-card {
+      margin: 22px auto;
+      padding: clamp(22px, 5vw, 36px);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--card);
+    }
+
+    .fund-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .muted, .small-note {
+      color: var(--muted);
+    }
+
+    .muted {
+      margin-bottom: 5px;
+    }
+
+    .fund-heading h2 {
+      margin: 0;
+    }
+
+    .gold-badge {
+      padding: 7px 12px;
+      border: 1px solid var(--gold);
+      border-radius: 30px;
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .progress-track {
+      height: 12px;
+      margin-top: 24px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #39352e;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--gold);
+      transition: width 0.4s ease;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .story p {
+      color: #e2ddd3;
+    }
+
+    .amount-options {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+      margin: 12px 0;
+    }
+
+    .amount-button {
+      padding: 12px 4px;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--white);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .amount-button.selected,
+    .amount-button:hover {
+      background: var(--gold);
+      color: #17130b;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      margin-top: 7px;
+      padding: 13px;
+      border: 1px solid #625b4e;
+      border-radius: 8px;
+      background: #100f0c;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .mpesa-button {
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 9px;
+      background: var(--green);
+      color: white;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .mpesa-button:hover {
+      background: #008f4c;
+    }
+
+    .payment-instructions {
+      margin-top: 22px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #12120f;
+      overflow-wrap: anywhere;
+    }
+
+    .payment-instructions[hidden] {
+      display: none;
+    }
+
+    .recipient {
+      color: var(--gold);
+      font-size: 1.4rem;
+      font-weight: 900;
+    }
+
+    .small-note {
+      font-size: 0.85rem;
+    }
+
+    footer {
+      padding: 25px 16px 40px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding-top: 48px;
+      }
+
+      .amount-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .fund-heading {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <section class="hero">
+      <span class="eyebrow">❤️ A Family's Call for Help</span>
+
+      <h1>Support Raphael's Treatment</h1>
+
+      <p class="hero-text">
+        Every prayer, every contribution, and every act of kindness
+        can help Raphael and his family through this difficult time.
+        Join us in supporting his medical care.
+      </p>
+
+      <a class="button" href="#donate">
+        Contribute to Raphael's Medical Fund →
+      </a>
+    </section>
+
+    <section class="fund-card" aria-label="Fundraising progress">
+      <div class="fund-heading">
+        <div>
+          <p class="muted">FUNDRAISING GOAL</p>
+          <h2>KSh 200,000</h2>
+        </div>
+        <span class="gold-badge">MEDICAL FUND</span>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="progress-labels">
+        <span id="raisedAmount">KSh 0 verified</span>
+        <span id="progressPercent">0%</span>
+      </div>
+
+      <p class="small-note">
+        Only verified contributions are included in the public total.
+      </p>
+    </section>
+
+    <section class="section-card story">
+      <span class="eyebrow">Raphael's Story</span>
+
+      <h2>Standing Together for <span>Hope.</span></h2>
+
+      <p>Hello everyone 👋🏾❤️</p>
+
+      <p>
+        Thank you for standing with our family during this difficult time.
+        Your prayers, encouragement, and kindness mean so much to us.
+      </p>
+
+      <p>
+        Our 14-year-old brother, Raphael Kiprop, has been experiencing
+        stomach pain and is currently being reviewed at Nairobi Women
+        Hospital. We are awaiting the doctor's official report to confirm
+        the treatment he needs.
+      </p>
+
+      <p>
+        We are reaching out to our family, friends, and wider community
+        for prayers and financial support toward his medical care.
+        Once the doctors confirm the recommended treatment and costs,
+        we will share the relevant update with supporters.
+      </p>
+
+      <p>
+        Every contribution, no matter the size, can make a difference.
+        If you are unable to contribute financially, your prayers and
+        sharing this fundraiser are also deeply appreciated.
+      </p>
+
+      <p>
+        Thank you from the bottom of our hearts. 🤝🏾❤️🙏🏾
+      </p>
+
+      <p><strong>Matthew 8:17</strong></p>
+      <p><strong>Jeremiah 33:6–7</strong></p>
+      <p><strong>John 14:6</strong></p>
+    </section>
+
+    <section class="donate-card" id="donate">
+      <span class="eyebrow">Be Part of the Difference</span>
+
+      <h2>Make a <span>Contribution.</span></h2>
+
+      <p class="muted">
+        Choose an amount and follow the M-Pesa payment instructions.
+      </p>
+
+      <form id="donationForm">
+        <label for="donorName">Your name (optional)</label>
+        <input
+          id="donorName"
+          name="donorName"
+          type="text"
+          maxlength="80"
+          placeholder="Enter your name"
+        >
+
+        <label for="amount">Contribution amount (KSh)</label>
+
+        <div class="amount-options">
+          <button type="button" class="amount-button" data-amount="200">KSh 200</button>
+          <button type="button" class="amount-button" data-amount="500">KSh 500</button>
+          <button type="button" class="amount-button" data-amount="1000">KSh 1,000</button>
+          <button type="button" class="amount-button" data-amount="2000">KSh 2,000</button>
+        </div>
+
+        <input
+          id="amount"
+          name="amount"
+          type="number"
+          min="1"
+          max="200000"
+          step="1"
+          required
+          placeholder="Or enter another amount"
+        >
+
+        <button class="button full-button" type="submit">
+          Show M-Pesa Instructions
+        </button>
+      </form>
+
+      <div id="paymentInstructions" class="payment-instructions" hidden>
+        <h3>Complete Your Contribution Using M-Pesa</h3>
+
+        <p>Your selected contribution:</p>
+        <p class="recipient" id="chosenAmount">KSh 0</p>
+
+        <p>Recipient phone number:</p>
+        <p class="recipient">0743061214</p>
+
+        <p>
+          1. Open the M-Pesa app on your phone, or open the M-Pesa menu
+          on your phone.
+        </p>
+        <p>2. Select <strong>Send Money</strong>.</p>
+        <p>3. Enter the recipient number shown above.</p>
+        <p>4. Enter your chosen contribution amount.</p>
+        <p>5. Confirm the recipient and amount before entering your PIN.</p>
+        <p>6. Keep your M-Pesa confirmation message for verification.</p>
+
+        <button
+          type="button"
+          id="openMpesa"
+          class="mpesa-button"
+        >
+          Open M-Pesa
+        </button>
+
+        <p class="small-note">
+          If the button does not open M-Pesa on your device, open the app
+          manually and follow the instructions above. This website does not
+          initiate or verify payments automatically.
+        </p>
+
+        <p class="small-note">
+          Never enter your M-Pesa PIN on this website or share it with anyone.
+        </p>
+
+        <button type="button" id="resetDonation" class="button full-button">
+          Change Amount
+        </button>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>Your Support <span>Matters.</span></h2>
+
+      <p>
+        Contributions will be included in the public total only after
+        verification against actual M-Pesa payment records. The total
+        shown above is not updated automatically by this page.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Made with ❤️ for Raphael Kiprop's family.</p>
+    <p class="small-note">Fundraising target: KSh 200,000</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("donationForm");
+    const amountInput = document.getElementById("amount");
+    const instructions = document.getElementById("paymentInstructions");
+    const chosenAmount = document.getElementById("chosenAmount");
+    const resetButton = document.getElementById("resetDonation");
+
+    document.querySelectorAll(".amount-button").forEach(button => {
+      button.addEventListener("click", () => {
+        amountInput.value = button.dataset.amount;
+
+        document.querySelectorAll(".amount-button").forEach(item => {
+          item.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+      });
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const amount = Number(amountInput.value);
+
+      if (!Number.isInteger(amount) || amount < 1 || amount > 200000) {
+        alert("Please enter an amount from KSh 1 to KSh 200,000.");
+        return;
+      }
+
+      chosenAmount.textContent =
+        "KSh " + amount.toLocaleString("en-KE");
+
+      instructions.hidden = false;
+
+      instructions.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+
+    resetButton.addEventListener("click", () => {
+      instructions.hidden = true;
+      amountInput.focus();
+    });
+
+    document.getElementById("openMpesa").addEventListener("click", () => {
+      // Try the app link, but keep manual instructions available.
+      window.location.href = "mpesa://";
+
+      setTimeout(() => {
+        alert(
+          "If M-Pesa did not open, open it manually, choose Send Money, " +
+          "enter 0743061214, and enter your selected contribution amount."
+        );
+      }, 1200);
+    });
+  </script>
+</body>
+</html>

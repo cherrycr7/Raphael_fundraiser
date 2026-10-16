@@ -566,6 +566,34 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 1200);
     });
   </script>
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector("form");
+  const amountInput = document.getElementById("contributionAmount");
+  const instructions = document.getElementById("paymentInstructions");
+  const chosenAmount = document.getElementById("chosenAmount");
+
+  if (!form || !amountInput || !instructions || !chosenAmount) return;
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const amount = Number(amountInput.value);
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      alert("Please enter a valid contribution amount.");
+      return;
+    }
+
+    chosenAmount.textContent =
+      "KSh " + amount.toLocaleString("en-KE");
+
+    instructions.hidden = false;
+    instructions.style.display = "block";
+    instructions.scrollIntoView({ behavior: "smooth" });
+  });
+});
+</script>
 </body>
 </html>
 <style>

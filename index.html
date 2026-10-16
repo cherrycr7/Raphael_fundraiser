@@ -377,7 +377,7 @@
 
         <label for="amount">Contribution amount (KSh)</label>
 
-        <div class="contribution-buttons">
+  <div class="contribution-buttons">
   <button type="button" data-amount="200">KSh 200</button>
   <button type="button" data-amount="500">KSh 500</button>
   <button type="button" data-amount="1000">KSh 1,000</button>
@@ -396,6 +396,29 @@
   placeholder="Enter amount"
 />
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const amountInput = document.getElementById("contributionAmount");
+
+  const buttons = document.querySelectorAll(
+    ".contribution-buttons button[data-amount]"
+  );
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      amountInput.value = button.dataset.amount;
+
+      document.querySelectorAll(
+        ".contribution-buttons button"
+      ).forEach(function (item) {
+        item.classList.remove("active");
+      });
+
+      button.classList.add("active");
+    });
+  });
+});
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const amountInput = document.getElementById("contributionAmount");
